@@ -1,1584 +1,604 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidzzy Coders - أكاديمية البرمجة للأطفال</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
-        
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --accent: #fd79a8;
-            --light: #f8f9fa;
-            --dark: #2d3436;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --danger: #d63031;
-            --text: #2d3436;
-            --bg: #ffffff;
-            --card-bg: #f8f9fa;
-        }
-        
-        [data-theme="dark"] {
-            --primary: #a29bfe;
-            --secondary: #6c5ce7;
-            --accent: #ff7675;
-            --light: #2d3436;
-            --dark: #1e272e;
-            --text: #f8f9fa;
-            --bg: #1e272e;
-            --card-bg: #2d3436;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* تأثير جزيئات الخلفية الديناميكي */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle, var(--primary) 1px, transparent 1px),
-                radial-gradient(circle, var(--accent) 1px, transparent 1px),
-                radial-gradient(circle, var(--secondary) 1px, transparent 1px);
-            background-size: 100px 100px;
-            background-position: 0 0, 30px 30px, 60px 60px;
-            animation: moveParticles 60s linear infinite;
-            z-index: -1;
-            opacity: 0.1;
-        }
-        
-        @keyframes moveParticles {
-            100% {
-                background-position: 100px 100px, 130px 130px, 160px 160px;
-            }
-        }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .logo-animation {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .code-bracket {
-            font-family: monospace;
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: white;
-            animation: bounceBracket 1.5s infinite ease-in-out;
-        }
-        
-        .code-bracket:nth-child(1) { animation-delay: 0.1s; }
-        .code-bracket:nth-child(2) { animation-delay: 0.3s; }
-        .code-bracket:nth-child(3) { animation-delay: 0.5s; }
-        
-        @keyframes bounceBracket {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgb(19, 19, 255);
-            
-        }
-
-        .hero-h2{
-            text-shadow: 2px 2px 20px rgb(19, 19, 255);
-            font-weight: bolder;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: white;
-            transition: width 0.3s;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: transform 0.3s;
-        }
-        
-        .theme-toggle:hover {
-            transform: rotate(30deg);
-        }
-        
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 2rem;
-            color: white;
-            margin-top: 70px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: heroPulse 10s ease-in-out infinite;
-            z-index: -1;
-        }
-        
-        @keyframes heroPulse {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.2); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 0.3; }
-        }
-        
-        .hero h2 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInDown 1s;
-            position: relative;
-        }
-        
-        .hero .dynamic-text {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            height: 40px;
-            line-height: 40px;
-            overflow: hidden;
-        }
-        
-        .hero .dynamic-text span {
-            display: inline-block;
-            animation: slideText 9s infinite;
-        }
-        
-        .hero .dynamic-text span:nth-child(1) { animation-delay: 0s; }
-        .hero .dynamic-text span:nth-child(2) { animation-delay: 3s; }
-        .hero .dynamic-text span:nth-child(3) { animation-delay: 6s; }
-        
-        @keyframes slideText {
-            0% { transform: translateY(0); opacity: 1; }
-            25% { transform: translateY(0); opacity: 1; }
-            33% { transform: translateY(-40px); opacity: 0; }
-            66% { transform: translateY(40px); opacity: 0; }
-            75% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        
-        .cta-button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s infinite;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--accent), #ff8a00, var(--accent));
-            background-size: 200% 200%;
-            z-index: -1;
-            transition: 0.5s;
-            animation: gradientBG 3s ease infinite;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .cta-button:hover::before {
-            animation: gradientBG 1.5s ease infinite;
-        }
-        
-        /* About Section */
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--primary);
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .about-text p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        
-        .about-image {
-            flex: 1;
-            position: relative;
-        }
-        
-        .about-image img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* Courses Section */
-        .courses {
-            background-color: var(--card-bg);
-            padding: 5rem 2rem;
-        }
-        
-        .courses-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .course-card {
-            background-color: var(--bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            perspective: 1000px;
-        }
-        
-        .course-content {
-            padding: 1.5rem;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .course-card:hover .course-content {
-            transform: rotateY(10deg) rotateX(5deg);
-        }
-        
-        .course-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .course-card:hover img {
-            transform: scale(1.05);
-        }
-        
-        .course-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .course-content p {
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .course-age {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .course-card:hover .course-age {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 5rem 2rem;
-        }
-        
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .feature-card {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255,255,255,0) 0%,
-                rgba(255,255,255,0) 45%,
-                rgba(255,255,255,0.5) 48%,
-                rgba(255,255,255,0) 52%,
-                rgba(255,255,255,0) 100%
-            );
-            transform: rotate(30deg);
-            animation: shine 3s infinite;
-            opacity: 0;
-        }
-        
-        @keyframes shine {
-            0% { opacity: 0; transform: translateX(-100%) rotate(30deg); }
-            20% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(100%) rotate(30deg); }
-        }
-        
-        .feature-card:hover {
-            transform: scale(1.05);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        
-        .feature-icon.fa-certificate {
-            position: relative;
-            animation: certificateSpin 8s infinite linear;
-            transform-origin: 50% 50%;
-        }
-        
-        @keyframes certificateSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.1); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .feature-card p {
-            line-height: 1.6;
-        }
-        
-        /* Testimonials Section */
-        .testimonials {
-            background-color: var(--card-bg);
-            padding: 5rem 2rem;
-        }
-        
-        .testimonials-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial-slide {
-            background-color: var(--bg);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin: 0 1rem;
-            text-align: center;
-            display: none;
-        }
-        
-        .testimonial-slide::before {
-            content: '★ ★ ★ ★ ★';
-            color: var(--warning);
-            display: block;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            animation: starPulse 2s infinite;
-        }
-        
-        @keyframes starPulse {
-            0% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 0.8; transform: scale(1); }
-        }
-        
-        .testimonial-slide.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        .testimonial-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .testimonial-author img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            transition: transform 0.3s;
-        }
-        
-        .testimonial-slide:hover .testimonial-author img {
-            transform: rotate(5deg) scale(1.05);
-        }
-        
-        .author-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .author-info p {
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
-        
-        .testimonial-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            gap: 1rem;
-        }
-        
-        .testimonial-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--secondary);
-            opacity: 0.5;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .testimonial-dot.active {
-            opacity: 1;
-            background-color: var(--primary);
-            transform: scale(1.2);
-        }
-        
-        /* Contact Section */
-        .contact {
-            padding: 5rem 2rem;
-        }
-        
-        .contact-container {
-            display: flex;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .contact-info p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-        
-        .contact-details {
-            margin-top: 2rem;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .contact-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            transition: transform 0.3s;
-        }
-        
-        .contact-item:hover .contact-icon {
-            transform: scale(1.2);
-        }
-        
-        .contact-form {
-            flex: 1;
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: formGlow 4s infinite alternate;
-        }
-        
-        @keyframes formGlow {
-            0% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-            100% { box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3); }
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
-            background-color: var(--bg);
-            color: var(--text);
-            transition: all 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .form-group textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .submit-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(30deg);
-            transition: all 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .submit-btn:hover::after {
-            left: 100%;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
-            animation: footerPulse 8s infinite alternate;
-        }
-        
-        @keyframes footerPulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.2); opacity: 0.8; }
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: right;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column li {
-            margin-bottom: 0.8rem;
-            color: #ddd;
-        }
-        
-        .footer-column a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column a:hover {
-            color: var(--accent);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white !important;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px) rotate(10deg);
-        }
-        
-        .copyright {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ddd;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .logo-animation {
-                display: none;
-            }
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .contact-container {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav ul {
-                position: fixed;
-                top: 80px;
-                right: -100%;
-                width: 80%;
-                height: calc(100vh - 80px);
-                background-color: var(--primary);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-                transition: right 0.3s;
-                z-index: 999;
-            }
-            
-            nav ul.active {
-                right: 0;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .dynamic-text {
-                font-size: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            header {
-                padding: 1rem;
-            }
-            
-            .logo h1 {
-                font-size: 1.2rem;
-            }
-            
-            .section {
-                padding: 3rem 1rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero .dynamic-text {
-                font-size: 1.2rem;
-            }
-            
-            .feature-card {
-                padding: 1.5rem;
-            }
-            
-            .code-bracket {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="logo-bg-remove.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <canvas id="particles"></canvas>
-    <header>
-        <div class="logo">
-            <div class="logo-animation">
-                <div class="code-bracket">{ }</div>
-                <div class="code-bracket">{ }</div>
-                <div class="code-bracket">{ }</div>
+   <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="logo-bg-remove.png" alt="Kidzzy Coders Logo" id="logo-img">
+                <span>Kidzzy Coders</span>
+            </a>
+            
+            <div class="header-actions">
+                <button class="btn btn-primary" id="register-btn">
+                    <i class="fas fa-user-plus"></i>
+                    <span class="btn-text">سجل الآن</span>
+                </button>
+                <div class="theme-toggle">
+                    <input type="checkbox" id="dark-mode-toggle">
+                    <label for="dark-mode-toggle" class="toggle-label">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <div class="toggle-ball"></div>
+                    </label>
+                </div>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
-            <h1>Kidzzy Coders</h1>
+            
+            <nav class="navbar">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span>الرئيسية</span>
+                    </a></li>
+                    <li><a href="#about" class="nav-link">
+                        <i class="fas fa-info-circle nav-icon"></i>
+                        <span>نبذة عنا</span>
+                    </a></li>
+                    <li><a href="#tracks" class="nav-link">
+                        <i class="fas fa-code-branch nav-icon"></i>
+                        <span>المسارات</span>
+                    </a></li>
+                    <li><a href="#projects" class="nav-link">
+                        <i class="fas fa-project-diagram nav-icon"></i>
+                        <span>مشاريع الطلاب</span>
+                    </a></li>
+                    <li><a href="#testimonials" class="nav-link">
+                        <i class="fas fa-comment-alt nav-icon"></i>
+                        <span>آراء أولياء الأمور</span>
+                    </a></li>
+                    <li><a href="#contact" class="nav-link">
+                        <i class="fas fa-envelope nav-icon"></i>
+                        <span>اتصل بنا</span>
+                    </a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul id="nav-menu">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#about">عن الأكاديمية</a></li>
-                <li><a href="#courses">الدورات</a></li>
-                <li><a href="#features">المميزات</a></li>
-                <li><a href="#testimonials">آراء الطلاب</a></li>
-                <li><a href="#contact">تواصل معنا</a></li>
-            </ul>
-            <button class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-        <button class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </button>
+        <!-- <div class="nav-indicator"></div> -->
     </header>
-    
     <section class="hero" id="home">
-        <h2 class="hero-h2">أكاديمية Kidzzy Coders لتعليم البرمجة للأطفال</h2>
-        <h3 style="margin: 0 0 30px 0;">ساعد طفلك على اكتشاف عالم البرمجة والإبداع التقني من خلال دوراتنا الممتعة المصممة خصيصًا للأطفال من سن 7 إلى 18 سنة</h3>
-        <div class="dynamic-text">
-            <span>اكتشف الإبداع التقني</span>
-            <span>تعلم البرمجة بسهولة</span>
-            <span>صمم مستقبلك الآن</span>
-        </div>
-        <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
-    </section>
-    
-    <section class="section" id="about">
-        <h2 class="section-title">عن أكاديميتنا</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <h3>لماذا Kidzzy Coders؟</h3>
-                <p>أكاديمية Kidzzy Coders هي منصة تعليمية متخصصة في تعليم البرمجة للأطفال واليافعين من سن 7 إلى 18 سنة. نقدم تجربة تعليمية تفاعلية عبر الإنترنت تساعد الطلاب على تطوير مهاراتهم البرمجية والإبداعية.</p>
-                <p>نبدأ مع الطلاب من الصفر باستخدام لغة سكراتش البسيطة، ثم ننتقل إلى لغة بايثون، وأخيرًا نخصص الطالب في المجال الذي يفضله مثل تطوير الويب، الألعاب، تحليل البيانات، الذكاء الاصطناعي أو تطبيقات الموبايل.</p>
-                <p>نقدم جلسات تعليمية في مجموعات صغيرة (3-5 طلاب) أو جلسات خاصة فردية لضمان حصول كل طالب على الاهتمام الكافي.</p>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">نُعلم أطفالك لغة المستقبل، <br> لغة <span class="highlight">البرمجة</span></h1>
+                <p class="hero-text">أكاديمية Kidzzy Coders هي بوابتك لتعليم طفلك البرمجة بطريقة ممتعة وتفاعلية، من
+                    الألعاب إلى الذكاء الاصطناعي.</p>
+                <div class="hero-buttons">
+                    <a href="#tracks" class="btn btn-primary">اكتشف المسارات</a>
+                    <button class="btn btn-secondary" id="hero-register-btn">سجل الآن</button>
+                </div>
             </div>
+            <div class="hero-image">
+                <img src="boy learn.avif" alt="Kids coding on computers">
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">لماذا Kidzzy Coders؟</h2>
+                <p class="section-subtitle">نوفر بيئة تعليمية فريدة تُطلق العنان لإبداع طفلك.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="feature-title">منهج متكامل</h3>
+                    <p class="feature-text">مسارات تعليمية متدرجة تناسب جميع الأعمار والمستويات.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3 class="feature-title">تعليم تفاعلي</h3>
+                    <p class="feature-text">دروس قائمة على المشاريع والألعاب لضمان الاستمتاع والتحصيل.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users-cog"></i></div>
+                    <h3 class="feature-title">مدربون خبراء</h3>
+                    <p class="feature-text">مدربون متخصصون في تعليم الأطفال بأساليب مبتكرة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tracks" id="tracks">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">مساراتنا التعليمية</h2>
+                <p class="section-subtitle">نقدم مجموعة واسعة من المسارات البرمجية التي تناسب شغف طفلك.</p>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="scratch-tab">Scratch</button>
+                <button class="tab-btn" data-tab="python-tab">Python</button>
+                <button class="tab-btn" data-tab="web-tab">تطوير الويب</button>
+                <button class="tab-btn" data-tab="ai-tab">الذكاء الاصطناعي</button>
+            </div>
+            <div id="scratch-tab" class="tab-content active">
+                <div class="tracks-grid">
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fas fa-cat"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">أساسيات Scratch</h3>
+                            <p class="track-desc">تعلم أساسيات البرمجة من خلال بناء ألعاب وقصص متحركة.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 7-10 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 3 أشهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fas fa-gamepad"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">بناء الألعاب في Scratch</h3>
+                            <p class="track-desc">تطوير مهارات البرمجة المتقدمة من خلال إنشاء ألعاب معقدة.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 8-11 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 1 شهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="python-tab" class="tab-content">
+                <div class="tracks-grid">
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fab fa-python"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">أساسيات Python</h3>
+                            <p class="track-desc">مقدمة في لغة بايثون وتطبيقاتها الأساسية.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 10-14 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 4 أشهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fas fa-terminal"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">بايثون المتقدم</h3>
+                            <p class="track-desc">التعمق في هياكل البيانات والخوارزميات.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 12-16 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 1 شهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="web-tab" class="tab-content">
+                <div class="tracks-grid">
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fas fa-globe"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">تطوير الويب (HTML/CSS)</h3>
+                            <p class="track-desc">بناء مواقع ويب بسيطة باستخدام HTML و CSS.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 12-18 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 4 أشهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="ai-tab" class="tab-content">
+                <div class="tracks-grid">
+                    <div class="track-card">
+                        <div class="track-icon bg-primary-light"><i class="fas fa-brain"></i></div>
+                        <div class="track-info">
+                            <h3 class="track-title">مقدمة في الذكاء الاصطناعي</h3>
+                            <p class="track-desc">تعلم أساسيات التعلم الآلي وبناء نماذج بسيطة.</p>
+                            <ul class="track-details">
+                                <li><i class="fas fa-user-friends"></i> 14-18 سنوات</li>
+                                <li><i class="fas fa-clock"></i> 6 أشهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
             <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Kids learning coding">
+                <img src="about-us.jpg" alt="A teacher explaining coding to kids">
+            </div>
+            <div class="about-content">
+                <div class="section-header text-right">
+                    <h2 class="section-title">من نحن؟</h2>
+                    <p class="section-subtitle">نؤمن بأن كل طفل لديه القدرة على أن يصبح مبدعًا في عالم التكنولوجيا.</p>
+                </div>
+                <p class="about-text">Kidzzy Coders هي أكاديمية رائدة في تعليم البرمجة للأطفال واليافعين من سن 7 إلى 18
+                    سنة. هدفنا هو تزويدهم بالمهارات اللازمة لمواجهة تحديات المستقبل، من خلال منهج متكامل وممتع يركز على
+                    التفكير المنطقي والإبداع.</p>
+                <ul class="about-features">
+                    <li class="about-feature"><i class="fas fa-check"></i> تنمية التفكير النقدي وحل المشكلات.</li>
+                    <li class="about-feature"><i class="fas fa-check"></i> بناء مشاريع حقيقية وعملية.</li>
+                    <li class="about-feature"><i class="fas fa-check"></i> شهادات معتمدة تثبت إنجازاتهم.</li>
+                </ul>
             </div>
         </div>
     </section>
-    
-    <section class="section courses" id="courses">
-        <h2 class="section-title">دوراتنا التعليمية</h2>
-        <div class="courses-container">
-            <div class="course-card">
-                <span class="course-age">7-10 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Scratch Programming">
-                <div class="course-content">
-                    <h3>البرمجة باستخدام سكراتش</h3>
-                    <p>دورة ممتعة لتعليم أساسيات البرمجة للأطفال باستخدام لغة سكراتش المرئية التي تتيح لهم إنشاء ألعاب وقصص تفاعلية.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-count="500">+</div>
+                    <div class="stat-label">طالب</div>
                 </div>
-            </div>
-            
-            <div class="course-card">
-                <span class="course-age">10-14 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Python Programming">
-                <div class="course-content">
-                    <h3>البرمجة بلغة بايثون</h3>
-                    <p>دورة متقدمة لتعليم لغة بايثون التي تعد من أفضل اللغات للمبتدئين وتستخدم في مجالات متعددة مثل الذكاء الاصطناعي وتحليل البيانات.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
+                <div class="stat-card">
+                    <div class="stat-number" data-count="15">+</div>
+                    <div class="stat-label">مسار تعليمي</div>
                 </div>
-            </div>
-            
-            <div class="course-card">
-                <span class="course-age">14-18 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Web Development">
-                <div class="course-content">
-                    <h3>تطوير الويب</h3>
-                    <p>دورة متخصصة في تطوير مواقع الويب باستخدام HTML, CSS, JavaScript وإنشاء تطبيقات ويب تفاعلية.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
+                <div class="stat-card">
+                    <div class="stat-number" data-count="200">+</div>
+                    <div class="stat-label">مشروع</div>
                 </div>
-            </div>
-            
-            <div class="course-card">
-                <span class="course-age">14-18 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Game Development">
-                <div class="course-content">
-                    <h3>تطوير الألعاب</h3>
-                    <p>تعلم كيفية تصميم وتطوير الألعاب الإلكترونية باستخدام محركات ألعاب متقدمة وإنشاء مشاريع ألعاب كاملة.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
-                </div>
-            </div>
-            
-            <div class="course-card">
-                <span class="course-age">14-18 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Data Science">
-                <div class="course-content">
-                    <h3>تحليل البيانات والذكاء الاصطناعي</h3>
-                    <p>دورة متقدمة تغطي أساسيات تحليل البيانات، التعلم الآلي والذكاء الاصطناعي باستخدام بايثون.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
-                </div>
-            </div>
-            
-            <div class="course-card">
-                <span class="course-age">14-18 سنوات</span>
-                <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mobile Apps">
-                <div class="course-content">
-                    <h3>تطوير تطبيقات الموبايل</h3>
-                    <p>تعلم كيفية بناء تطبيقات الهاتف المحمول لأنظمة Android وiOS باستخدام أدوات التطوير الحديثة.</p>
-                    <a href="https://forms.gle/example" class="cta-button" target="_blank">سجل الآن</a>
+                <div class="stat-card">
+                    <div class="stat-number" data-count="98">%</div>
+                    <div class="stat-label">نسبة رضا</div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section class="section features" id="features">
-        <h2 class="section-title">مميزات أكاديميتنا</h2>
-        <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>مجموعات صغيرة</h3>
-                <p>مجموعات تعليمية صغيرة (3-5 طلاب) أو جلسات خاصة فردية لضمان الاهتمام الشخصي بكل طالب.</p>
+
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">مشاريع طلابنا</h2>
+                <p class="section-subtitle">إبداعات أطفالنا تثبت أن المستقبل مشرق</p>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <h3>مسابقات وجوائز</h3>
-                <p>مسابقات دورية لكل مستوى مع جوائز قيمة للفائزين لتحفيز الإبداع والتميز.</p>
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="scratch">Scratch</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="ai">AI</button>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-certificate"></i>
+
+            <div class="projects-grid">
+                <div class="project-card" data-category="scratch">
+                    <div class="project-image">
+                        <img src="./Scratch Games/scratch2.png" class="project-img" alt="مشروع Scratch">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">لعبة المغامرة</h3>
+                        <p class="project-desc">لعبة مغامرات بسيطة باستخدام سكراتش من طالب عمره 9 سنوات</p>
+                        <span class="project-age">9 سنوات</span>
+                    </div>
                 </div>
-                <h3>شهادات معتمدة</h3>
-                <p>شهادة إتمام معتمدة بعد كل مستوى تدريبي تثبت مهارات الطالب وإنجازاته.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chalkboard-teacher"></i>
+                <div class="project-card" data-category="python">
+                    <div class="project-image">
+                        <img src="./Scratch Games/calc.jpg" alt="مشروع Python">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">حاسبة علمية</h3>
+                        <p class="project-desc">حاسبة علمية متقدمة باستخدام بايثون من طالب عمره 12 سنة</p>
+                        <span class="project-age">12 سنة</span>
+                    </div>
                 </div>
-                <h3>مدربون خبراء</h3>
-                <p>فريق من المدربين المؤهلين ذوي الخبرة في تعليم البرمجة للأطفال واليافعين.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-laptop-code"></i>
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="./Scratch Games/web.jpg" alt="مشروع ويب">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">موقع مدرسة</h3>
+                        <p class="project-desc">موقع ويب لمدرسة ابتدائية من طالب عمره 14 سنة</p>
+                        <span class="project-age">14 سنة</span>
+                    </div>
                 </div>
-                <h3>تعليم عملي</h3>
-                <p>نهج تعليمي عملي يركز على المشاريع التطبيقية لتعزيز الفهم والإبداع.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-child"></i>
+                <div class="project-card" data-category="ai">
+                    <div class="project-image">
+                        <img src="./Scratch Games/animals.jpg" alt="مشروع ذكاء اصطناعي">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">تصنيف الحيوانات</h3>
+                        <p class="project-desc">نموذج ذكاء اصطناعي لتصنيف الحيوانات من طالب عمره 16 سنة</p>
+                        <span class="project-age">16 سنة</span>
+                    </div>
                 </div>
-                <h3>بيئة صديقة للأطفال</h3>
-                <p>بيئة تعليمية ممتعة وآمنة مصممة خصيصًا لتناسب الأطفال واليافعين.</p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section testimonials" id="testimonials">
-        <h2 class="section-title">آراء طلابنا وأولياء الأمور</h2>
-        <div class="testimonials-container">
-            <div class="testimonial-slide active">
-                <p class="testimonial-text">"ابني كان يحب الألعاب الإلكترونية فقط، ولكن بعد انضمامه إلى Kidzzy Coders أصبح مهتمًا بإنشاء الألعاب بنفسه. شكرًا لكم على تحويل شغفه إلى شيء منتج!"</p>
-                <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Parent">
-                    <div class="author-info">
-                        <h4>أم محمد</h4>
-                        <p>والدة طالب</p>
+                <div class="project-card" data-category="scratch">
+                    <div class="project-image">
+                        <img src="./Scratch Games/scratch1.jpg" alt="مشروع Scratch">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">قصة تفاعلية</h3>
+                        <p class="project-desc">قصة تفاعلية مع ألعاب مصغرة باستخدام سكراتش من طالبة عمرها 8 سنوات</p>
+                        <span class="project-age">8 سنوات</span>
+                    </div>
+                </div>
+                <div class="project-card" data-category="python">
+                    <div class="project-image">
+                        <img src="./Scratch Games/snack.jpg" alt="مشروع Python">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">لعبة الأفعى</h3>
+                        <p class="project-desc">لعبة الأفعى الكلاسيكية باستخدام بايثون من طالب عمره 11 سنة</p>
+                        <span class="project-age">11 سنة</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="testimonial-slide">
-                <p class="testimonial-text">"دورات Kidzzy Coders غيرت طريقة تفكيري بالكامل. تعلمت كيف أفكر كمبرمج وأحل المشكلات بطرق إبداعية. الآن لدي مشروعي الخاص وأحلم بأن أصبح مطور ألعاب محترف."</p>
-                <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
-                    <div class="author-info">
-                        <h4>يوسف</h4>
-                        <p>طالب - 15 سنة</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-slide">
-                <p class="testimonial-text">"أحببت طريقة الشرح البسيطة والمرحة في أكاديمية Kidzzy Coders. المدربون يجعلون البرمجة تبدو سهلة وممتعة. فزت بالمركز الأول في مسابقة سكراتش وحصلت على هدية رائعة!"</p>
-                <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Student">
-                    <div class="author-info">
-                        <h4>نور</h4>
-                        <p>طالبة - 10 سنوات</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-nav">
-                <div class="testimonial-dot active" data-slide="0"></div>
-                <div class="testimonial-dot" data-slide="1"></div>
-                <div class="testimonial-dot" data-slide="2"></div>
+
+            <div class="projects-actions">
+                <a href="#projects" class="btn btn-primary">شاهد المزيد من المشاريع</a>
             </div>
         </div>
     </section>
-    
-    <section class="section contact" id="contact">
-        <h2 class="section-title">تواصل معنا</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>كن على تواصل مع Kidzzy Coders</h3>
-                <p>لديك استفسار أو ترغب في التسجيل في أحد دوراتنا؟ لا تتردد في التواصل معنا عبر أي من الوسائل التالية أو ملء نموذج الاتصال.</p>
-                
-                <div class="contact-details">
+
+    <section class="certificates" id="certificates">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">شهاداتنا</h2>
+                <p class="section-subtitle">شهادات معتمدة تثبت إنجازات طفلك</p>
+            </div>
+
+            <div class="certificates-slider">
+                <div class="certificate-slide">
+                    <img src="./Kidzzy Coders Python Level 1 Certificates/فهد محمد.png" alt="شهادة Kidzzy Coders">
+                    <div class="certificate-info">
+                        <h3 class="certificate-title">شهادة إتمام مسار Scratch</h3>
+                        <p class="certificate-desc">تمنح للطلاب الذين أكملوا مسار البرمجة باستخدام سكراتش بنجاح</p>
+                        <ul class="certificate-features">
+                            <li><i class="fas fa-check"></i> معتمدة من الأكاديمية</li>
+                            <li><i class="fas fa-check"></i> تحتوي على رمز التحقق</li>
+                            <li><i class="fas fa-check"></i> قابلة للمشاركة على LinkedIn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="certificate-slide">
+                    <img src="./Kidzzy Coders Python Level 1 Certificates/فهد محمد.png" alt="شهادة Kidzzy Coders">
+                    <div class="certificate-info">
+                        <h3 class="certificate-title">شهادة إتمام مسار Python</h3>
+                        <p class="certificate-desc">تمنح للطلاب الذين أكملوا مسار البرمجة باستخدام بايثون بنجاح</p>
+                        <ul class="certificate-features">
+                            <li><i class="fas fa-check"></i> معتمدة من الأكاديمية</li>
+                            <li><i class="fas fa-check"></i> تحتوي على رمز التحقق</li>
+                            <li><i class="fas fa-check"></i> قابلة للمشاركة على LinkedIn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="certificate-slide">
+                    <img src="./Kidzzy Coders Python Level 1 Certificates/فهد محمد.png" alt="شهادة Kidzzy Coders">
+                    <div class="certificate-info">
+                        <h3 class="certificate-title">شهادة إتمام مسار الذكاء الاصطناعي</h3>
+                        <p class="certificate-desc">تمنح للطلاب الذين أكملوا مسار الذكاء الاصطناعي بنجاح</p>
+                        <ul class="certificate-features">
+                            <li><i class="fas fa-check"></i> معتمدة من الأكاديمية</li>
+                            <li><i class="fas fa-check"></i> تحتوي على رمز التحقق</li>
+                            <li><i class="fas fa-check"></i> قابلة للمشاركة على LinkedIn</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-controls">
+                <button class="slider-prev"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots"></div>
+                <button class="slider-next"><i class="fas fa-chevron-left"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">آراء أولياء الأمور</h2>
+                <p class="section-subtitle">ماذا يقولون عنا</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="ولي امر 1.jpg" alt="ولي أمر" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h4>أحمد محمد</h4>
+                            <span>والد نواف، 14 سنة – الرياض</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"من يوم ما التحق نواف بالأكاديمية، وأنا شايف فرق كبير في شخصيته. صار
+                        يشتغل على مشاريع بنفسه، ويفكر بطريقة منظمة. الأكاديمية فعلاً تستحق كل التقدير، والله يوفقهم."
+                    </p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="وليه امر.jpg" alt="ولي أمر" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h4>سارة خالد</h4>
+                            <span>والدة ياسمين، 12 سنة</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"أنا ماكنتش فاهم هما بيعلموهم إيه بصراحة، بس كل شوية ألاقي بنتي عملت
+                        لعبة أو موقع صغير، وبقت دماغها حلوة فالحساب والمنطق. حسيت إن اللي بندفعه فيها مش بيضيع."</p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="ولي امر 2.jpg" alt="ولي أمر" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h4>خالد عبدالله</h4>
+                            <span>والد علي، 15 سنة</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"أكاديمية محترمة وبيتابعوا معانا أول بأول. كل شوية بيبعتوا تقدم الولد،
+                        ولو في حاجة بيتواصلوا فورًا. ابني مبسوط وحاسس إنه بيتعلم حاجة مفيدة. وإن شاء الله مكملين معاهم."
+                    </p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title">تواصل معنا</h2>
+                <p class="contact-text">هل لديك استفسار أو ترغب في تسجيل طفلك؟ تواصل معنا وسنكون سعداء بمساعدتك.</p>
+
+                <div class="contact-info">
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>الهاتف</h4>
-                            <p>01034516241</p>
-                        </div>
+                        <i class="fas fa-envelope"></i>
+                        <span>kidzzycoders@gmail.com</span>
                     </div>
-                    
+
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>البريد الإلكتروني</h4>
-                            <p>kidzzycoders@gmail.com</p>
-                        </div>
+                        <i class="fas fa-phone-alt"></i>
+                        <span>01034516241</span>
                     </div>
-                    
+
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>العنوان</h4>
-                            <p>أكاديمية أونلاين - جلسات افتراضية</p>
-                        </div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>المهندسين، القاهرة، مصر</span>
                     </div>
                 </div>
+
+                <div class="contact-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fas fa-phone-alt"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-messenger"></i></a>
+                </div>
             </div>
-            
+
             <div class="contact-form">
-                <form id="contactForm">
+                <form>
                     <div class="form-group">
-                        <label for="name">الاسم الكامل</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" placeholder="اسمك الكريم" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="email">البريد الإلكتروني</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="phone">رقم الهاتف</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" placeholder="رقم الهاتف">
                     </div>
-                    
                     <div class="form-group">
-                        <label for="course">الدورة المطلوبة</label>
-                        <select id="course" name="course">
-                            <option value="">اختر الدورة</option>
-                            <option value="scratch">البرمجة باستخدام سكراتش</option>
-                            <option value="python">البرمجة بلغة بايثون</option>
-                            <option value="web">تطوير الويب</option>
-                            <option value="games">تطوير الألعاب</option>
-                            <option value="ai">تحليل البيانات والذكاء الاصطناعي</option>
-                            <option value="mobile">تطوير تطبيقات الموبايل</option>
+                        <select required>
+                            <option value="" disabled selected>اختر موضوع الرسالة</option>
+                            <option value="registration">تسجيل طالب جديد</option>
+                            <option value="inquiry">استفسار عام</option>
+                            <option value="feedback">ملاحظات أو اقتراحات</option>
+                            <option value="other">موضوع آخر</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="message">الرسالة</label>
-                        <textarea id="message" name="message" required></textarea>
+                        <textarea placeholder="رسالتك" rows="5" required></textarea>
                     </div>
-                    
-                    <button type="submit" class="submit-btn">إرسال</button>
+                    <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
                 </form>
             </div>
         </div>
     </section>
-    
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Kidzzy Coders</h3>
-                <p>أكاديمية متخصصة في تعليم البرمجة للأطفال واليافعين من سن 7 إلى 18 سنة عبر الإنترنت.</p>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-title">Kidzzy Coders</h3>
+                    <p class="footer-text">أكاديمية متخصصة في تعليم البرمجة وتكنولوجيا المعلومات للأطفال واليافعين من سن
+                        7 إلى 18 سنة.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-phone-alt"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-messenger"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#about">نبذة عنا</a></li>
+                        <li><a href="#tracks">المسارات</a></li>
+                        <li><a href="#projects">مشاريع الطلاب</a></li>
+                        <li><a href="#certificates">الشهادات</a></li>
+                        <li><a href="#testimonials">آراء أولياء الأمور</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">المسارات</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Scratch</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">تطوير الويب</a></li>
+                        <li><a href="#">الذكاء الاصطناعي</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">اتصل بنا</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-envelope"></i> kidzzycoders@gmail.com</li>
+                        <li><i class="fas fa-phone-alt"></i> 01034516241</li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span>المهندسين، القاهرة، مصر</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="footer-column">
-                <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#about">عن الأكاديمية</a></li>
-                    <li><a href="#courses">الدورات</a></li>
-                    <li><a href="#features">المميزات</a></li>
-                    <li><a href="#contact">تواصل معنا</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>الدورات</h3>
-                <ul>
-                    <li><a href="#courses">سكراتش للمبتدئين</a></li>
-                    <li><a href="#courses">برمجة بايثون</a></li>
-                    <li><a href="#courses">تطوير الويب</a></li>
-                    <li><a href="#courses">تطوير الألعاب</a></li>
-                    <li><a href="#courses">الذكاء الاصطناعي</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>تواصل معنا</h3>
-                <ul>
-                    <li><i class="fas fa-phone"></i> 01034516241</li>
-                    <li><i class="fas fa-envelope"></i> kidzzycoders@gmail.com</li>
-                </ul>
-                
-                <div class="social-links">
-                    <a href="https://www.facebook.com/share/16fktQ9cqr/" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://wa.me/201034516241" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="tel:+201034516241" target="_blank" class="social-link"><i class="fa-solid fa-phone"></i></a>
-                    <a href="#" class="social-link" onclick="alert('سوف يتم توفيره قريبا')"><i class="fa-brands fa-instagram"></i></a>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2023 Kidzzy Coders Academy. جميع الحقوق محفوظة.</p>
+                <div class="footer-legal">
+                    <a href="#">شروط الاستخدام</a>
+                    <a href="#">سياسة الخصوصية</a>
                 </div>
             </div>
         </div>
-        
-        <div class="copyright">
-            <p>&copy; 2023 Kidzzy Coders. جميع الحقوق محفوظة.</p>
-        </div>
     </footer>
-    
-    <script>
-        // Particles Animation
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        
-        const particlesArray = [];
-        const numberOfParticles = 100;
-        
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 5 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-                this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
-            }
-            
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                
-                if (this.size > 0.2) this.size -= 0.05;
-                
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-        
-        function init() {
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-        
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                
-                if (particlesArray[i].size <= 0.2) {
-                    particlesArray.splice(i, 1);
-                    particlesArray.push(new Particle());
-                    i--;
-                }
-            }
-            requestAnimationFrame(animateParticles);
-        }
-        
-        init();
-        animateParticles();
-        
-        // Dark/Light Mode Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-        
-        // Check for saved theme preference or use preferred color scheme
-        const currentTheme = localStorage.getItem('theme') || 
-                           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        // Apply the current theme
-        if (currentTheme === 'dark') {
-            body.setAttribute('data-theme', 'dark');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            body.setAttribute('data-theme', 'light');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-        
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.setAttribute('data-theme', 'light');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                localStorage.setItem('theme', 'light');
-            }
-        });
-        
-        // Mobile Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.innerHTML = navMenu.classList.contains('active') ? 
-                               '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Close menu when clicking on a link
-        document.querySelectorAll('#nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-        
-        // Testimonial Slider
-        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-        const testimonialDots = document.querySelectorAll('.testimonial-dot');
-        let currentSlide = 0;
-        
-        function showSlide(index) {
-            testimonialSlides.forEach(slide => slide.classList.remove('active'));
-            testimonialDots.forEach(dot => dot.classList.remove('active'));
-            
-            testimonialSlides[index].classList.add('active');
-            testimonialDots[index].classList.add('active');
-            currentSlide = index;
-        }
-        
-        testimonialDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => showSlide(index));
-        });
-        
-        // Auto slide change
-        setInterval(() => {
-            let nextSlide = (currentSlide + 1) % testimonialSlides.length;
-            showSlide(nextSlide);
-        }, 3000);
-        
-        // Form submission - Google Form Redirect with Pre-filled Data
-        const contactForm = document.getElementById('contactForm');
-        
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Collect form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const course = document.getElementById('course').value;
-            const message = document.getElementById('message').value;
-            
-            // Create Google Form URL with prefilled data
-            const baseUrl = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform';
-            const params = new URLSearchParams();
-            
-            // Add your actual Google Form field IDs here
-            params.append('entry.2005620554', name); // Name field
-            params.append('entry.1045781291', email); // Email field
-            params.append('entry.1065046570', phone); // Phone field
-            params.append('entry.1166974658', course); // Course field
-            params.append('entry.839337160', message); // Message field
-            
-            // Redirect to Google Form with prefilled data
-            window.location.href = `${baseUrl}?${params.toString()}`;
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Animation on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.about-content, .course-card, .feature-card');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
-        
-        // Set initial state for animated elements
-        document.querySelectorAll('.about-content, .course-card, .feature-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s, transform 0.5s';
-        });
-        
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-        
-        // Floating elements animation
-        const floatingElements = document.querySelectorAll('.feature-icon, .course-age');
-        floatingElements.forEach(el => {
-            el.style.animation = `float 3s ease-in-out ${Math.random() * 2}s infinite`;
-        });
-    </script>
+
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2 class="modal-title">سجل طفلك الآن</h2>
+            <p class="modal-text">املأ النموذج التالي وسنتواصل معك لتأكيد التسجيل وتحديد المسار المناسب لطفلك.</p>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?embedded=true" width="100%"
+                height="800" frameborder="0" marginheight="0" marginwidth="0">جارٍ التحميل...</iframe>
+            <div class="modal-footer">
+                <p>لديك استفسار؟ <a href="#contact">تواصل معنا</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
